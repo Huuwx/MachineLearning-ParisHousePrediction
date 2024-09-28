@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự đoán Doanh số</title>
+    <style>
+        /* Reset mặc định */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+        background-image: url("https://baoxaydung.com.vn/stores/news_dataimages/hiep/062017/02/18/181447baoxaydung_image001.jpg");
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        color: #495057;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .container {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+        overflow-y: auto; /* Cho phép cuộn nếu nội dung quá dài */
+        max-height: 90vh; /* Đảm bảo không bị mất phần tử nào khi cửa sổ thu nhỏ */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            width: 30%;
+            font-size: 14px;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .form-group input[type="number"], .form-group select {
+            width: 65%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input[type="number"]:focus, .form-group select:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            text-align: center;
+            color: #28a745;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dự đoán Giá Nhà Tại Paris</h1>
+        <form method="post">
+            <div class="form-group">
+                <label for="squareMeters">squareMeters:</label>
+                <input type="number" step="any" name="squareMeters" required>
+            </div>
+
+            <div class="form-group">
+                <label for="numbeOfRoom">numbeOfRoom:</label>
+                <input type="number" step="any" name="numbeOfRoom" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hasYard">hasYard (0 or 1):</label>
+                <input type="number" step="any" name="hasYard" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hasPool">hasPool (0 or 1):</label>
+                <input type="number" step="any" name="hasPool" required>
+            </div>
+
+            <div class="form-group">
+                <label for="floors">floors:</label>
+                <input type="number" step="any" name="floors" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cityCode">cityCode:</label>
+                <input type="number" step="any" name="cityCode" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cityPartRange">cityPartRange:</label>
+                <input type="number" step="any" name="cityPartRange" required>
+            </div>
+
+            <div class="form-group">
+                <label for="numPrevOwners">numPrevOwners:</label>
+                <input type="number" step="any" name="numPrevOwners" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="made">made:</label>
+                <input type="number" step="any" name="made" required>
+            </div>
+
+            <div class="form-group">
+                <label for="isNewBuilt">isNewBuilt (0 or 1):</label>
+                <input type="number" step="any" name="isNewBuilt" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hasStormProtector">hasStormProtector (0 or 1):</label>
+                <input type="number" step="any" name="hasStormProtector" required>
+            </div>
+
+            <div class="form-group">
+                <label for="basement">basement:</label>
+                <input type="number" step="any" name="basement" required>
+            </div>
+
+            <div class="form-group">
+                <label for="attic">attic:</label>
+                <input type="number" step="any" name="attic" required>
+            </div>
+
+            <div class="form-group">
+                <label for="garage">garage:</label>
+                <input type="number" step="any" name="garage" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="hasStorageRoom">hasStorageRoom:</label>
+                <input type="number" step="any" name="hasStorageRoom" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hasGuestRoom">hasGuestRoom:</label>
+                <input type="number" step="any" name="hasGuestRoom" required>
+            </div>
+            <div class="form-group">
+                <label for="model">Chọn mô hình:</label>
+                <select name="model" required>
+                    {% for model in model_names %}
+                        <option value="{{ model }}">{{ model.capitalize() }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <input type="submit" value="Dự đoán">
+        </form>
+
+        {% if prediction is not none %}
+            <h2>Dự đoán Giá Nhà: {{ prediction }}</h2>
+        {% endif %}
+
+        <script>
+            document.getElementById('predictionForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Ngăn tải lại trang khi nhấn nút submit
+                
+                // Lấy dữ liệu từ form
+                const formData = new FormData(this);
+    
+                // Gửi dữ liệu form qua AJAX
+                fetch('/predict', { // Đường dẫn '/predict' là ví dụ, bạn thay bằng API của bạn
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json()) // Chuyển đổi phản hồi thành JSON
+                .then(data => {
+                    // Hiển thị kết quả dự đoán trên giao diện
+                    document.getElementById('result').textContent = `Dự đoán Giá Nhà: ${data.prediction}`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
